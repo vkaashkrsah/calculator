@@ -5,49 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Calculator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <h1>Python Calculator</h1>
-    <p>Calculate using your Python application.</p>
+    <main class="calculator-container">
+        <h1>Calculator</h1>
 
-    <form method="POST">
+        <div class="calculator-display">
+            <div id="expression" class="expression"></div>
+            <div id="display" class="display">0</div>
+        </div>
 
-        <label>First Number:</label>
-        <input type="number" step="any" name="num_1" required>
+        <div class="calculator-buttons">
+            <button class="utility" data-action="clear">AC</button>
+            <button class="utility" data-action="delete">DEL</button>
+            <button class="operator" data-action="modulus">%</button>
+            <button class="operator" data-action="operator" data-value="/">÷</button>
 
-        <br><br>
+            <button data-number="7">7</button>
+            <button data-number="8">8</button>
+            <button data-number="9">9</button>
+            <button class="operator" data-action="operator" data-value="*">×</button>
 
-        <label>Second Number:</label>
-        <input type="number" step="any" name="num_2" required>
+            <button data-number="4">4</button>
+            <button data-number="5">5</button>
+            <button data-number="6">6</button>
+            <button class="operator" data-action="operator" data-value="-">−</button>
 
-        <br><br>
+            <button data-number="1">1</button>
+            <button data-number="2">2</button>
+            <button data-number="3">3</button>
+            <button class="operator" data-action="operator" data-value="+">+</button>
 
-        <label>Select Operation:</label>
+            <button class="utility" data-action="percentage">% of</button>
+            <button data-number="0">0</button>
+            <button data-action="decimal">.</button>
+            <button class="equals" data-action="equals">=</button>
+        </div>
 
-        <select name="operation" required>
-            <option value="add">Addition (+)</option>
-            <option value="subtract">Subtraction (-)</option>
-            <option value="multiply">Multiplication (*)</option>
-            <option value="divide">Division (/)</option>
-            <option value="modulus">Modulus (%)</option>
-            <option value="percentage">Percentage (of)</option>
-        </select>
-
-        <br><br>
-
-        <button type="submit">Calculate</button>
-
-    </form>
-
-    {% if result is not none %}
-        <h2>Result</h2>
-        <p>The answer of {{ expression }} is: {{ result }}</p>
-    {% endif %}
-
-    {% if error %}
-        <p style="color: red;">Error: {{ error }}</p>
-    {% endif %}
-
+        <section class="history-section">
+            <div class="history-heading">
+                <h2>Calculation History</h2>
+                <button id="clear-history" type="button">Clear</button>
+            </div>
+            <ul id="history-list"></ul>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
