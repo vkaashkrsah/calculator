@@ -1,33 +1,57 @@
 # Basic Calculator
 
-## Live Demo
-[Open My Calculator](https://vkaashkrsah.github.io/calculator/)
+A multi-platform calculator project built using Python, Flask, HTML, CSS, and JavaScript. It includes a command-line calculator, an interactive web calculator, and a REST API.
 
-## Flask Calculator (Python + Flask)
-[Open Flask Calculator](https://calculator-flask-app-68gz.onrender.com)
+## 🚀 Live Demos
 
-A simple command-line calculator built using Python. It supports six mathematical operations: addition, subtraction, multiplication, division, modulus, and percentage.
-
-The project is designed to demonstrate Python fundamentals, user input handling, conditional statements, exception handling, and Git/GitHub version control.
+| Application | Live Link |
+|---|---|
+| JavaScript Calculator | [Open My Calculator](https://vkaashkrsah.github.io/calculator/) |
+| Python Flask Calculator | [Open Flask Calculator](https://calculator-flask-app-68gz.onrender.com) |
 
 ## Features
 
-- Addition (`+`)
-- Subtraction (`-`)
-- Multiplication (`*`)
-- Division (`/`)
-- Modulus (`%`)
-- Percentage (`of`)
+### Python CLI Calculator
+- Addition, subtraction, multiplication, and division
+- Modulus and percentage calculations
 - Decimal number support
-- Division-by-zero handling
-- Invalid input handling
-- Easy-to-use command-line interface
+- Input validation and exception handling
+- Division-by-zero and modulus-by-zero handling
+
+### Flask Web Calculator
+- Interactive calculator interface
+- Flask-powered backend
+- REST API for mathematical operations
+- JSON request and response handling
+- Shared calculation logic with the Python CLI
+
+### JavaScript Calculator
+- Browser-based calculator
+- Interactive user interface
+- Decimal number support
+- Keyboard support
+- Calculation history
+- Clear and delete functionality
+
+### Automated Testing
+- Unit tests using Pytest
+- Automated linting using Flake8
+- GitHub Actions continuous integration
 
 ## Technologies Used
 
-- Python 3
-- Git
-- GitHub
+| Category | Technologies |
+|---|---|
+| Programming Languages | Python, JavaScript |
+| Frontend | HTML5, CSS3 |
+| Backend | Flask |
+| Production Server | Gunicorn |
+| Testing | Pytest |
+| Code Quality | Flake8 |
+| Version Control | Git, GitHub |
+| CI/CD | GitHub Actions |
+| Hosting | GitHub Pages, Render |
+| API Testing | Postman |
 
 ## Project Structure
 
@@ -35,119 +59,133 @@ The project is designed to demonstrate Python fundamentals, user input handling,
 calculator/
 │
 ├── calculate.py
+│
+├── python-web/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── static/
+│   │   ├── style.css
+│   │   └── script.js
+│   └── templates/
+│       └── index.html
+│
+├── docs/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+├── tests/
+│   └── test_calculate.py
+│
+├── .github/
+│   └── workflows/
+│       └── python-app.yml
+│
 ├── README.md
 └── .gitignore
 ```
 
 ## Installation and Setup
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/vkaashkrsah/calculator.git
 ```
 
-### 2. Navigate to the project directory
+### 2. Navigate to the Project
 
 ```bash
 cd calculator
 ```
 
-### 3. Run the calculator
+### 3. Run the Python CLI Calculator
 
-Make sure Python 3 is installed, then execute:
+Make sure Python 3 is installed.
 
 ```bash
 python3 calculate.py
 ```
 
-No additional Python packages are required.
+### 4. Run the Flask Web Application
 
-## Usage
+Create and activate a virtual environment:
 
-Run the program and enter two numbers. Then select the mathematical operation.
-
-### Example 1: Addition
-
-```text
-Enter first number: 2
-Enter second number: 3
-
-Enter operation: add
-
-The answer of 2 + 3 is: 5
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-### Example 2: Subtraction
+Install dependencies:
 
-```text
-Enter first number: 10
-Enter second number: 4
-
-Enter operation: subtract
-
-The answer of 10 - 4 is: 6
+```bash
+python -m pip install -r python-web/requirements.txt
 ```
 
-### Example 3: Multiplication
+Start the Flask application:
 
-```text
-Enter first number: 5
-Enter second number: 4
-
-Enter operation: multiply
-
-The answer of 5 * 4 is: 20
+```bash
+python -m flask --app python-web.app run
 ```
 
-### Example 4: Division
+Open the following address in your browser:
 
 ```text
-Enter first number: 20
-Enter second number: 5
-
-Enter operation: divide
-
-The answer of 20 / 5 is: 4
+http://127.0.0.1:5000
 ```
 
-### Example 5: Modulus
+### 5. Run Automated Tests
+
+```bash
+python -m pytest -v
+```
+
+## REST API
+
+The Flask application provides a REST API for calculator operations.
+
+**Endpoint**
 
 ```text
-Enter first number: 10
-Enter second number: 3
-
-Enter operation: modulus
-
-The answer of 10 % 3 is: 1
+POST /calculate
 ```
 
-### Example 6: Percentage
+**Request Body**
 
-```text
-Enter first number: 20
-Enter second number: 200
-
-Enter operation: percentage
-
-The answer of 20% of 200 is: 40
+```json
+{
+    "num_1": 20,
+    "num_2": 10,
+    "operation": "addition"
+}
 ```
 
-## Error Handling
+**Successful Response**
 
-The calculator handles common errors, including:
+```json
+{
+    "success": true,
+    "expression": "20 + 10",
+    "result": 30.0
+}
+```
 
-- Division by zero
-- Modulus by zero
-- Invalid numerical input
-- Unsupported operations
+**Error Handling**
+
+The API returns HTTP 400 for invalid operations, invalid input, and division or modulus by zero.
+
+## Deployment
+
+- **GitHub Pages:** Hosts the standalone JavaScript calculator.
+- **Render:** Hosts the Python Flask application.
 
 ## Future Improvements
 
-- [ ] Develop a web-based calculator using HTML, CSS, and JavaScript.
-- [ ] Build a Flask-based web interface using Python.
-- [ ] Deploy the web applications online.
-- [ ] Improve the user interface and add more mathematical operations.
+- [ ] Add scientific calculator operations.
+- [ ] Add automated API tests.
+- [ ] Improve mobile responsiveness.
+- [ ] Add more calculation history features.
+- [ ] Expand test coverage.
 
 ## Author
 
@@ -158,4 +196,4 @@ The calculator handles common errors, including:
 
 ## License
 
-This project is open-source and available for learning and educational purposes.
+This project is open-source and intended for learning and educational purposes.
