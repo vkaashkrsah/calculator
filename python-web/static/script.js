@@ -59,76 +59,50 @@ function chooseOperation(operation) {
     }
 }
 
-function calculateResult() {
+
+async function calculateResult() {
     if (selectedOperation === null || waitingForSecondNumber) {
         return;
     }
 
     const secondNumber = Number(currentInput);
-    let result;
 
     try {
-        switch (selectedOperation) {
-            case "+":
-                result = firstNumber + secondNumber;
-                break;
+        // Send the calculation request to the Flask backend
+        const response = await fetch("/calculate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                num_1: firstNumber,
+                num_2: secondNumber,
+                operation: selectedOperation
+            })
+        });
 
-            case "-":
-                result = firstNumber - secondNumber;
-                break;
+        // Convert the server response into JavaScript data
+        const data = await response.json();
 
-            case "*":
-                result = firstNumber * secondNumber;
-                break;
-
-            case "/":
-                if (secondNumber === 0) {
-                    throw new Error("Cannot divide by zero");
-                }
-                result = firstNumber / secondNumber;
-                break;
-
-            case "%":
-                if (secondNumber === 0) {
-                    throw new Error("Cannot use modulus by zero");
-                }
-                result = firstNumber % secondNumber;
-                break;
-
-            case "percentage":
-                result = (firstNumber / 100) * secondNumber;
-                break;
-
-            default:
-                return;
+        // Handle errors returned by Flask
+        if (!response.ok || !data.success) {
+            throw new Error(data.error || "Calculation failed.");
         }
 
-        if (!Number.isFinite(result)) {
-            throw new Error("Invalid calculation");
-        }
+        // Format the result
+        const formattedResult = Number(
+            Number(data.result).toPrecision(12)
+        );
 
-        const symbols = {
-            "+": "+",
-            "-": "−",
-            "*": "×",
-            "/": "÷",
-            "%": "%",
-            "percentage": "% of"
-        };
-
-        const operator = symbols[selectedOperation];
-        const expression = selectedOperation === "percentage"
-            ? `${firstNumber}% of ${secondNumber}`
-            : `${firstNumber} ${operator} ${secondNumber}`;
-
-        const formattedResult = Number(result.toPrecision(12));
-
-        expressionDisplay.textContent = expression;
+        // Update the calculator display
+        expressionDisplay.textContent = data.expression;
         currentInput = String(formattedResult);
         updateDisplay();
 
-        addToHistory(`${expression} = ${formattedResult}`);
+        // Add calculation to history
+        addToHistory(`${data.expression} = ${formattedResult}`);
 
+        // Reset calculation variables
         firstNumber = null;
         selectedOperation = null;
         waitingForSecondNumber = true;
@@ -143,6 +117,7 @@ function calculateResult() {
         waitingForSecondNumber = false;
     }
 }
+
 
 function clearCalculator() {
     currentInput = "0";
