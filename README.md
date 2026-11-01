@@ -1,5 +1,8 @@
 # Basic Calculator
 
+## Live Demo
+[Open My Calculator](https://vkaashkrsah.github.io/calculator/)
+
 A simple command-line calculator built using Python. It supports six mathematical operations: addition, subtraction, multiplication, division, modulus, and percentage.
 
 The project is designed to demonstrate Python fundamentals, user input handling, conditional statements, exception handling, and Git/GitHub version control.
